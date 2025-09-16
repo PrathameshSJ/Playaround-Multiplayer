@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx56fabrckurd"]
+
+[ext_resource type="Script" uid="uid://bo0pqqcyc8xxj" path="res://scripts/network_manager.gd" id="1_cemok"]
+
+[node name="NetworkManager" type="Node3D"]
+script = ExtResource("1_cemok")

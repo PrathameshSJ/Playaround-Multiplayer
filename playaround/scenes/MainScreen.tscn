@@ -1,0 +1,133 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5pc10tmqrdxe"]
+
+[ext_resource type="Script" uid="uid://1fvei7woj3n0" path="res://scripts/menu_manager.gd" id="1_j6ixq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6ixq"]
+
+[node name="MainScreen" type="Node2D"]
+
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("CContainer", "colorrect", "Control1")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_j6ixq")
+CContainer = NodePath("CenterContainer")
+colorrect = NodePath("ColorRect")
+Control1 = NodePath(".")
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+show_behind_parent = true
+layout_mode = 1
+offset_right = 1300.0
+offset_bottom = 630.0
+color = Color(0.194129, 0.566433, 0.347453, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1153.0
+offset_bottom = 651.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="main_menu" type="VBoxContainer" parent="Control/CenterContainer"]
+layout_mode = 2
+
+[node name="SP" type="Button" parent="Control/CenterContainer/main_menu"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
+text = "Single-Player"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control/CenterContainer/main_menu/SP"]
+visible = false
+position = Vector2(54, 15)
+scale = Vector2(5.44, 1.48)
+shape = SubResource("RectangleShape2D_j6ixq")
+visibility_mode = 1
+
+[node name="MP" type="Button" parent="Control/CenterContainer/main_menu"]
+layout_mode = 2
+theme_override_colors/icon_hover_color = Color(0.972273, 0, 0.432265, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0, 0, 1)
+text = "Multi-Player"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control/CenterContainer/main_menu/MP"]
+visible = false
+position = Vector2(53, 15)
+scale = Vector2(5.44, 1.48)
+shape = SubResource("RectangleShape2D_j6ixq")
+visibility_mode = 1
+
+[node name="QT" type="Button" parent="Control/CenterContainer/main_menu"]
+layout_mode = 2
+theme_override_colors/icon_hover_color = Color(0.972273, 0, 0.432265, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0, 0, 1)
+text = "Quit"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control/CenterContainer/main_menu/QT"]
+visible = false
+position = Vector2(54, 15)
+scale = Vector2(5.44, 1.48)
+shape = SubResource("RectangleShape2D_j6ixq")
+visibility_mode = 1
+
+[node name="multiplayer_menu" type="VBoxContainer" parent="Control/CenterContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Host" type="Button" parent="Control/CenterContainer/multiplayer_menu"]
+layout_mode = 2
+text = "Host"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control/CenterContainer/multiplayer_menu/Host"]
+visible = false
+position = Vector2(21, 15)
+scale = Vector2(2.56, 1.48)
+shape = SubResource("RectangleShape2D_j6ixq")
+visibility_mode = 1
+
+[node name="Join" type="Button" parent="Control/CenterContainer/multiplayer_menu"]
+layout_mode = 2
+text = "Join"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control/CenterContainer/multiplayer_menu/Join"]
+visible = false
+position = Vector2(21, 15)
+scale = Vector2(2.56, 1.48)
+shape = SubResource("RectangleShape2D_j6ixq")
+visibility_mode = 1
+
+[node name="ip_input" type="TextEdit" parent="Control/CenterContainer/multiplayer_menu/Join"]
+layout_mode = 2
+offset_left = 51.0
+offset_top = -3.0
+offset_right = 129.0
+offset_bottom = 32.0
+placeholder_text = "input ip"
+emoji_menu_enabled = false
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="Back" type="Button" parent="Control/CenterContainer/multiplayer_menu"]
+layout_mode = 2
+text = "Back"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control/CenterContainer/multiplayer_menu/Back"]
+visible = false
+position = Vector2(21, 15)
+scale = Vector2(2.56, 1.48)
+shape = SubResource("RectangleShape2D_j6ixq")
+visibility_mode = 1
+
+[connection signal="pressed" from="Control/CenterContainer/main_menu/SP" to="Control" method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/main_menu/SP/TouchScreenButton" to="Control" method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/main_menu/MP" to="Control" method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/main_menu/QT" to="Control" method="_on_quit_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/multiplayer_menu/Host" to="Control" method="_on_host_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/multiplayer_menu/Join" to="Control" method="_on_join_pressed"]
+[connection signal="text_changed" from="Control/CenterContainer/multiplayer_menu/Join/ip_input" to="Control" method="_on_ip_input_text_changed"]
+[connection signal="pressed" from="Control/CenterContainer/multiplayer_menu/Back" to="Control" method="_on_back_pressed"]

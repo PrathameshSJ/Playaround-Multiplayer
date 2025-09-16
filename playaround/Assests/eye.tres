@@ -1,0 +1,4 @@
+[gd_resource type="ORMMaterial3D" format=3 uid="uid://b5gl47ekko8xv"]
+
+[resource]
+albedo_color = Color(0.907004, 0.458858, 1, 1)

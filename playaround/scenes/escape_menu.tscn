@@ -1,0 +1,80 @@
+[gd_scene load_steps=4 format=3 uid="uid://e8uf6oqwfoub"]
+
+[ext_resource type="Script" uid="uid://bxag2jfim03ac" path="res://scripts/escape_menu.gd" id="1_rqb4o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqb4o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qsd2a"]
+
+[node name="EscapeMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rqb4o")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -50.5
+offset_right = 48.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ip" type="Label" parent="Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="resume" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Panel/VBoxContainer/resume"]
+position = Vector2(48, 15.5)
+scale = Vector2(4.78669, 1.58809)
+shape = SubResource("RectangleShape2D_rqb4o")
+visibility_mode = 1
+
+[node name="mainmenu" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Panel/VBoxContainer/mainmenu"]
+position = Vector2(48, 15.5)
+scale = Vector2(4.75999, 1.56)
+shape = SubResource("RectangleShape2D_qsd2a")
+visibility_mode = 1
+
+[node name="quit" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Panel/VBoxContainer/quit"]
+position = Vector2(48, 15.5)
+scale = Vector2(4.75999, 1.56)
+shape = SubResource("RectangleShape2D_qsd2a")
+visibility_mode = 1
+
+[connection signal="pressed" from="Panel/VBoxContainer/resume/TouchScreenButton" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/mainmenu/TouchScreenButton" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/quit/TouchScreenButton" to="." method="_on_quit_pressed"]

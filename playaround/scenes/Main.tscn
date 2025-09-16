@@ -1,0 +1,55 @@
+[gd_scene load_steps=10 format=3 uid="uid://dh4kijthoc55p"]
+
+[ext_resource type="Script" uid="uid://dtgipw1c0cgdh" path="res://scripts/game_manager.gd" id="1_rarhs"]
+[ext_resource type="PackedScene" uid="uid://cx56fabrckurd" path="res://scenes/network_manager.tscn" id="1_vcsgt"]
+[ext_resource type="Material" uid="uid://l3lsan6j1ejo" path="res://Assests/floor.tres" id="2_rarhs"]
+[ext_resource type="Texture2D" uid="uid://c1d1mmtyl2ofs" path="res://Assests/skybox.hdr" id="2_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://wk3e5ss1fffs" path="res://scenes/first_animation.tscn" id="5_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://d4gj04xcpwcvm" path="res://scenes/dmg_cube.tscn" id="6_c01mt"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_c01mt"]
+panorama = ExtResource("2_vcsgt")
+filter = false
+
+[sub_resource type="Sky" id="Sky_jka67"]
+sky_material = SubResource("PanoramaSkyMaterial_c01mt")
+
+[sub_resource type="Environment" id="Environment_i5arm"]
+background_mode = 2
+background_color = Color(1, 1, 1, 1)
+sky = SubResource("Sky_jka67")
+tonemap_mode = 2
+tonemap_white = 1.1
+glow_enabled = true
+
+[node name="Main" type="Node3D"]
+
+[node name="Players" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.95259, 2.50829, 0)
+
+[node name="NetworkManager" parent="." instance=ExtResource("1_vcsgt")]
+
+[node name="GameManager" type="Node3D" parent="."]
+script = ExtResource("1_rarhs")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_i5arm")
+
+[node name="first_animation" parent="." instance=ExtResource("5_vcsgt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.64332, 1.5, 1.78875)
+
+[node name="base" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGCylinder3D" parent="base"]
+use_collision = true
+radius = 300.0
+height = 1.0
+sides = 64
+material = ExtResource("2_rarhs")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="base"]
+transform = Transform3D(-0.71133, -0.583498, -0.39184, 0.119896, -0.65006, 0.750364, -0.692556, 0.486777, 0.532367, -461.82, 907.641, 640.037)
+shadow_enabled = true
+
+[node name="DmgCube" parent="." instance=ExtResource("6_c01mt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.971389, 0.999999, -3.25438)

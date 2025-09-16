@@ -1,0 +1,158 @@
+[gd_scene load_steps=17 format=3 uid="uid://b1myulliprqrk"]
+
+[ext_resource type="Script" uid="uid://xqv6lovhyq27" path="res://scripts/myplayer.gd" id="1_1ajfr"]
+[ext_resource type="PackedScene" uid="uid://dbnb07gcger41" path="res://scenes/guns/gun.tscn" id="2_fnkpu"]
+[ext_resource type="Material" uid="uid://cmtbrg5ycokfd" path="res://Assests/body.tres" id="2_te437"]
+[ext_resource type="Material" uid="uid://b5gl47ekko8xv" path="res://Assests/eye.tres" id="3_dl51u"]
+[ext_resource type="PackedScene" uid="uid://e8uf6oqwfoub" path="res://scenes/escape_menu.tscn" id="3_xkfp4"]
+[ext_resource type="Material" uid="uid://4fkdme4jssuu" path="res://Assests/leg.tres" id="4_8o4dk"]
+[ext_resource type="PackedScene" uid="uid://cbfwvklakm2nt" path="res://scenes/hud.tscn" id="7_rb31t"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ncv8q"]
+height = 1.29805
+
+[sub_resource type="SphereMesh" id="SphereMesh_1ajfr"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_slir0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xkfp4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1ajfr"]
+
+[sub_resource type="Animation" id="Animation_slir0"]
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Legs/rightlegroot")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/Legs/leftlegroot")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Body/Gun:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rb31t"]
+resource_name = "gun_shoot"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Gun:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.595157, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1ajfr"]
+resource_name = "walk"
+loop_mode = 1
+step = 0.01
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Legs/rightlegroot")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.13, 1, -0.358368, 0, 0, 0.93358, 0.25, 1, -0.382683, 0, 0, 0.92388, 0.38, 1, -0.358368, 0, 0, 0.93358, 0.5, 1, 0, 0, 0, 1, 0.625, 1, 0.358368, 0, 0, 0.93358, 0.75, 1, 0.382683, 0, 0, 0.92388, 0.875, 1, 0.358368, 0, 0, 0.93358, 1, 1, 6.55387e-08, 0, 0, 1)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/Legs/leftlegroot")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.13, 1, 0.358368, 0, 0, 0.93358, 0.25, 1, 0.382683, 0, 0, 0.92388, 0.375, 1, 0.358368, 0, 0, 0.93358, 0.5, 1, 0, 0, 0, 1, 0.625, 1, -0.358368, 0, 0, 0.93358, 0.75, 1, -0.382683, 0, 0, 0.92388, 0.875, 1, -0.358368, 0, 0, 0.93358, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_slir0"]
+_data = {
+&"RESET": SubResource("Animation_slir0"),
+&"gun_shoot": SubResource("Animation_rb31t"),
+&"walk": SubResource("Animation_1ajfr")
+}
+
+[node name="myplayer" type="CharacterBody3D"]
+script = ExtResource("1_1ajfr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ncv8q")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_1ajfr")
+skeleton = NodePath("../CollisionShape3D")
+surface_material_override/0 = ExtResource("2_te437")
+
+[node name="lefteye" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.2, 0.1, 0.4)
+mesh = SubResource("SphereMesh_slir0")
+surface_material_override/0 = ExtResource("3_dl51u")
+
+[node name="righteye" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -0.2, 0.1, 0.4)
+mesh = SubResource("SphereMesh_slir0")
+surface_material_override/0 = ExtResource("3_dl51u")
+
+[node name="Legs" type="MeshInstance3D" parent="Body"]
+skeleton = NodePath("../..")
+
+[node name="rightlegroot" type="MeshInstance3D" parent="Body/Legs"]
+
+[node name="rightleg" type="MeshInstance3D" parent="Body/Legs/rightlegroot"]
+transform = Transform3D(0.334836, 0, 0, 0, 0.243929, 0, 0, 0, 0.476527, -0.25, -0.5, 0)
+mesh = SubResource("BoxMesh_xkfp4")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_8o4dk")
+
+[node name="leftlegroot" type="MeshInstance3D" parent="Body/Legs"]
+
+[node name="leftleg" type="MeshInstance3D" parent="Body/Legs/leftlegroot"]
+transform = Transform3D(0.334836, 0, 0, 0, 0.243929, 0, 0, 0, 0.476527, 0.25, -0.5, 0)
+mesh = SubResource("BoxMesh_xkfp4")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_8o4dk")
+
+[node name="Gun" parent="Body" instance=ExtResource("2_fnkpu")]
+transform = Transform3D(4.445, 0, 0, 0, 4.445, 0, 0, 0, 4.445, -0.395897, -0.0578003, 0.674217)
+
+[node name="CamRoot" type="Node3D" parent="."]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.833156, 0)
+
+[node name="CamPitch" type="Node3D" parent="CamRoot"]
+transform = Transform3D(1, 0, 0, 0, 0.951057, -0.309017, 0, 0.309017, 0.951057, 0, 0, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CamRoot/CamPitch"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+shape = SubResource("SphereShape3D_1ajfr")
+spring_length = 2.0
+
+[node name="Camera3D" type="Camera3D" parent="CamRoot/CamPitch/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_slir0")
+}
+
+[node name="EscapeMenu" parent="." instance=ExtResource("3_xkfp4")]
+
+[node name="hud" parent="." instance=ExtResource("7_rb31t")]

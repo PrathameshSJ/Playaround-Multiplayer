@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbnb07gcger41"]
+
+[ext_resource type="Script" uid="uid://ddk20q48tf0ol" path="res://scripts/gun.gd" id="1_x77fm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_x77fm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_og67c"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gp1hk"]
+
+[sub_resource type="Animation" id="Animation_og67c"]
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_x77fm"]
+resource_name = "shoot"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.698132, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gp1hk"]
+_data = {
+&"RESET": SubResource("Animation_og67c"),
+&"shoot": SubResource("Animation_x77fm")
+}
+
+[node name="Gun" type="Node3D"]
+script = ExtResource("1_x77fm")
+
+[node name="body" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0421092, 0, 0, 0, 0.0463255, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("BoxMesh_x77fm")
+
+[node name="handle" type="MeshInstance3D" parent="body"]
+transform = Transform3D(1, 0, 0, 0, 1.28399, 0, 0, 0, 0.347489, 0, -0.501158, -0.336186)
+mesh = SubResource("BoxMesh_og67c")
+
+[node name="muzzle" type="MeshInstance3D" parent="body"]
+transform = Transform3D(0.279822, 0, 0, 0, 0.0124441, -0.206197, 0, 0.211767, 0.0121167, 0, 0.268411, 0.405031)
+mesh = SubResource("CylinderMesh_gp1hk")
+
+[node name="Muzzle" type="Marker3D" parent="."]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_gp1hk")
+}
