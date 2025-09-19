@@ -1,5 +1,39 @@
-[gd_scene format=3 uid="uid://bit4b6kgwslh5"]
+[gd_scene load_steps=7 format=3 uid="uid://bit4b6kgwslh5"]
+
+[ext_resource type="Script" uid="uid://tv0krfa4ptif" path="res://scripts/guns/bullet_tracer.gd" id="1_du6jq"]
+
+[sub_resource type="Gradient" id="Gradient_qryme"]
+offsets = PackedFloat32Array(0, 0.163636, 0.831169, 1)
+colors = PackedColorArray(0.823529, 0.447059, 0, 0, 0.823529, 0.447059, 0, 1, 1, 1, 0.431373, 1, 1, 0.94902, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kfrxe"]
+gradient = SubResource("Gradient_qryme")
+height = 256
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y6bgy"]
+gradient = SubResource("Gradient_qryme")
+height = 256
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08nsp"]
+transparency = 1
+cull_mode = 2
+albedo_texture = SubResource("GradientTexture2D_kfrxe")
+emission_enabled = true
+emission_texture = SubResource("GradientTexture2D_y6bgy")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_4kipd"]
+material = SubResource("StandardMaterial3D_08nsp")
+size = 0.1
+sections = 2
+section_length = 10.0
 
 [node name="BulletTracer" type="Node3D"]
+script = ExtResource("1_du6jq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -10)
+mesh = SubResource("RibbonTrailMesh_4kipd")

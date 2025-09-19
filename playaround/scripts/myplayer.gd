@@ -120,11 +120,11 @@ func apply_network_input(new_input: Vector2):
 		input_dir = new_input
 
 #makes the player face the target when shot
-func face_target(target_pos: Vector3) -> void:
-	var dir = (target_pos - global_transform.origin)
+func rotate_to_direction(target_pos: Vector3) -> void:
+	var dir = (target_pos)
 	dir.y = 0  # keep rotation only in XZ plane
 	dir = dir.normalized()
-
+	
 	if dir.length() > 0.01:
 		var target_rot = atan2(dir.x, dir.z)
 		body_mesh.rotation.y = target_rot
