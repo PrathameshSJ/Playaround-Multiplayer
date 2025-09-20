@@ -53,3 +53,5 @@ shadow_enabled = true
 
 [node name="DmgCube" parent="." instance=ExtResource("6_c01mt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.971389, 0.999999, -3.25438)
+
+[node name="tracers" type="Node3D" parent="."]

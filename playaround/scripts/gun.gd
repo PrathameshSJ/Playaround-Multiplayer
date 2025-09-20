@@ -27,8 +27,8 @@ func shoot():
 	shot_sound.play()
 	
 	#animations
-	animation_player.play("shoot")
-	
+	#animation_player.play("shoot")
+	rpc("animations","shoot")
 	
 	var space_state = get_world_3d().direct_space_state
 	
@@ -38,7 +38,9 @@ func shoot():
 	var to = from + -cam.global_transform.basis.z * bullet_range  # -z is forward
 	
 	#trail
-	bullet_trail(to)
+	#bullet_trail(to)
+	if (to - muzzle.global_position).length() > 3.0:
+		rpc("bullet_trail",muzzle.global_position,to)
 	
 	# Create the ray query
 	var query = PhysicsRayQueryParameters3D.create(from, to)
@@ -58,18 +60,23 @@ func shoot():
 	# Reset fire cooldown
 	await get_tree().create_timer(fire_rate).timeout
 
-func bullet_trail(target_pos: Vector3):
-	var bullet_dir = (target_pos - muzzle.global_position).normalized()
-	var start_pos = muzzle.global_position
-	if (target_pos - start_pos).length() > 3.0:
-		var bullet_tracer = preload("res://scenes/guns/bullet_tracer.tscn").instantiate()
-		get_parent().add_sibling(bullet_tracer)
-		bullet_tracer.global_position = start_pos
-		bullet_tracer.target_pos = target_pos
-		bullet_tracer.look_at(target_pos)
+@rpc("call_local","any_peer","unreliable")
+func bullet_trail(start_pos: Vector3,target_pos: Vector3):
+	var bullet_tracer = preload("res://scenes/guns/bullet_tracer.tscn").instantiate()
+	get_node("/root/Main/tracers").add_child(bullet_tracer)
+	bullet_tracer.global_position = start_pos
+	bullet_tracer.target_pos = target_pos
+	bullet_tracer.look_at(target_pos)
+
+
 
 # Call this when a bullet hits something
 func hit_player(player: Node) -> void:
 	# Send to SERVER only (peer_id = 1 is always server in ENet)
 	print("Player ",player.get_multiplayer_authority()," hit.")
 	NetworkManager.rpc_id(1, "report_hit", player.get_multiplayer_authority(), damage) 
+
+@rpc("call_local","any_peer","unreliable")
+func animations(input: String):
+	if input=="shoot":
+		animation_player.play("shoot")

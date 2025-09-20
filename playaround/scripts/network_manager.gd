@@ -85,6 +85,8 @@ func _spawn_player(peer_id: int):
 	print("✅ Spawned player", peer_id)
 	push_warning("✅ Spawned player", peer_id)
 
+
+
 func _on_peer_connected(id: int):
 	if players_root:
 		_spawn_player(id)
@@ -148,15 +150,16 @@ func rpc_set_input(peer_id: int, new_input: Vector2):
 		players[peer_id].apply_network_input(new_input)
 
 # --- TRANSFORM SYNC ---
-func broadcast_transform(player: Node):
-	rpc("rpc_set_transform", multiplayer.get_unique_id(), player.global_transform)
+func broadcast_transform(player: Node,body: Node):
+	rpc("rpc_set_transform", multiplayer.get_unique_id(), player.global_transform, body.global_transform)
 
 @rpc("unreliable", "any_peer")
-func rpc_set_transform(peer_id: int, new_transform: Transform3D):
+func rpc_set_transform(peer_id: int, player_transform: Transform3D,body_transform: Transform3D):
 	if players.has(peer_id) and is_instance_valid(players[peer_id]):
 		var p = players[peer_id]
 		if not p.is_multiplayer_authority():
-			p.global_transform = new_transform
+			p.global_transform = player_transform
+			p.get_node("Body").global_transform = body_transform
 
 ###############DAMAGE##############
 
@@ -169,6 +172,13 @@ func request_damage(target_name: String, amount: int) -> void:
 		var target = players[int(target_name)]
 		if target:
 			target.take_damage(amount)
+
+@rpc("any_peer")
+func request_full_state(sender_id: int):
+	if multiplayer.is_server():
+		for pid in players.keys():
+			var p = players[pid]
+			rpc_id(sender_id, "sync_health", pid, p.get_health())
 
 
 @rpc("any_peer", "reliable","call_local")
