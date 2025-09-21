@@ -76,10 +76,21 @@ func _spawn_player(peer_id: int):
 	if players.has(peer_id):
 		print("⚠️ Player ", peer_id, " already exists")
 		return
-
+	
 	var player = player_scene.instantiate()
 	player.name = str(peer_id)
+	
 	players_root.add_child(player, true)
+	
+	# --- Get random spawn point ---
+	var spawn_points = get_tree().current_scene.get_node("SpawnPoints").get_children()
+	if spawn_points.size() > 0:
+		randomize()  # ensures different results each run
+		var spawn_point = spawn_points[randi() % spawn_points.size()]
+		player.global_transform.origin = spawn_point.global_transform.origin
+	else:
+		print("⚠️ No spawn points found, defaulting to origin")
+	
 	player.set_multiplayer_authority(peer_id)
 	players[peer_id] = player
 	print("✅ Spawned player", peer_id)

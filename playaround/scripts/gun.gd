@@ -9,8 +9,9 @@ extends Node3D
 @onready var camera = $"../../CamRoot/CamPitch/SpringArm3D/Camera3D"
 @onready var muzzle = $muzzle
 @onready var gun = $"."
+var bullet_tracer = preload("res://scenes/guns/bullet_tracer.tscn")
 
-
+var shoot_count:int
 
 var can_fire := true
 
@@ -19,6 +20,7 @@ func _unhandled_input(event):
 	if is_multiplayer_authority() or NetworkManager.isSinglePlayer:
 		if event.is_action_pressed("right_click") and can_fire:
 			can_fire = false
+			++shoot_count
 			shoot()
 			await get_tree().create_timer(fire_rate).timeout
 			can_fire = true
@@ -62,8 +64,8 @@ func shoot():
 
 @rpc("call_local","any_peer","unreliable")
 func bullet_trail(start_pos: Vector3,target_pos: Vector3):
-	var bullet_tracer = preload("res://scenes/guns/bullet_tracer.tscn").instantiate()
-	get_node("/root/Main/tracers").add_child(bullet_tracer)
+	var bullet_tracer = bullet_tracer.instantiate()
+	get_tree().current_scene.get_node("tracers").add_child(bullet_tracer)
 	bullet_tracer.global_position = start_pos
 	bullet_tracer.target_pos = target_pos
 	bullet_tracer.look_at(target_pos)

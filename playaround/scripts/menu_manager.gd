@@ -8,6 +8,7 @@ extends Control
 @onready var main_menu = $CenterContainer/main_menu
 @onready var multiplayer_menu = $CenterContainer/multiplayer_menu
 @onready var ip_input = $CenterContainer/multiplayer_menu/Join/ip_input
+@onready var singleplayer_menu = $CenterContainer/singleplayer_menu
 
 var ip := ""
 
@@ -32,10 +33,8 @@ func _resize_ui():
 
 
 func _on_singleplayer_pressed():
-	# Load your level scene
-	get_tree().change_scene_to_file("res://scenes/Main.tscn")
-	NetworkManager.isSinglePlayer = true
-	NetworkManager.singleplayer()
+	main_menu.visible = false
+	singleplayer_menu.visible = true
 
 func _on_multiplayer_pressed():
 	main_menu.visible = false
@@ -64,3 +63,16 @@ func _on_back_pressed():
 
 func _on_ip_input_text_changed():
 	ip = ip_input.text
+
+
+func _on_level_0_pressed():
+	# Load your level scene
+	get_tree().change_scene_to_file("res://scenes/Main.tscn")
+	NetworkManager.isSinglePlayer = true
+	NetworkManager.singleplayer()
+
+
+func _on_level_1_pressed():
+	get_tree().change_scene_to_file("res://scenes/level_1.tscn")
+	NetworkManager.isSinglePlayer = true
+	NetworkManager.singleplayer()

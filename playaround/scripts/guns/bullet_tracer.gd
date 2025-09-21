@@ -11,6 +11,9 @@ const MAX_LIFETIME_MS = 5000
 @onready var spawn_time = Time.get_ticks_msec()
 
 func _process(delta: float) -> void:
+	logic(target_pos,delta)
+
+func logic(target_pos: Vector3,delta):
 	var diff = target_pos - self.global_position
 	var add = diff.normalized() * speed * delta
 	add = add.limit_length(diff.length())

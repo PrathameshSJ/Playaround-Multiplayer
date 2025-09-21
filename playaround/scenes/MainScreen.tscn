@@ -123,6 +123,18 @@ scale = Vector2(2.56, 1.48)
 shape = SubResource("RectangleShape2D_j6ixq")
 visibility_mode = 1
 
+[node name="singleplayer_menu" type="VBoxContainer" parent="Control/CenterContainer"]
+visible = false
+layout_mode = 2
+
+[node name="level0" type="Button" parent="Control/CenterContainer/singleplayer_menu"]
+layout_mode = 2
+text = "level 0"
+
+[node name="level1" type="Button" parent="Control/CenterContainer/singleplayer_menu"]
+layout_mode = 2
+text = "level 1"
+
 [connection signal="pressed" from="Control/CenterContainer/main_menu/SP" to="Control" method="_on_singleplayer_pressed"]
 [connection signal="pressed" from="Control/CenterContainer/main_menu/SP/TouchScreenButton" to="Control" method="_on_singleplayer_pressed"]
 [connection signal="pressed" from="Control/CenterContainer/main_menu/MP" to="Control" method="_on_multiplayer_pressed"]
@@ -131,3 +143,5 @@ visibility_mode = 1
 [connection signal="pressed" from="Control/CenterContainer/multiplayer_menu/Join" to="Control" method="_on_join_pressed"]
 [connection signal="text_changed" from="Control/CenterContainer/multiplayer_menu/Join/ip_input" to="Control" method="_on_ip_input_text_changed"]
 [connection signal="pressed" from="Control/CenterContainer/multiplayer_menu/Back" to="Control" method="_on_back_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/singleplayer_menu/level0" to="Control" method="_on_level_0_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/singleplayer_menu/level1" to="Control" method="_on_level_1_pressed"]

@@ -1,13 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://d02ackk43iu6a"]
+[gd_scene load_steps=5 format=3 uid="uid://d02ackk43iu6a"]
 
 [ext_resource type="Script" uid="uid://dtgipw1c0cgdh" path="res://scripts/game_manager.gd" id="1_014kd"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_014kd"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_bswci"]
+sky_material = SubResource("ProceduralSkyMaterial_014kd")
+
+[sub_resource type="Environment" id="Environment_rus8k"]
+background_mode = 2
+sky = SubResource("Sky_bswci")
+tonemap_mode = 2
+glow_enabled = true
+
 [node name="level1" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rus8k")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 7, 0)
+transform = Transform3D(0.707107, -0.541675, 0.45452, 0, 0.642788, 0.766045, -0.707107, -0.541675, 0.45452, 0, 0, 0)
 
 [node name="Players" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27166, 1.05846, 0)
 
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("1_014kd")
@@ -23,3 +40,19 @@ size = Vector3(10, 0.2, 10)
 
 [node name="Box" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="tracers" type="Node3D" parent="."]
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="spawnpoint1" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9916, 0.795, 4.16148)
+
+[node name="spawnpoint2" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9916, 0.795, -4.31454)
+
+[node name="spawnpoint3" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.41241, 0.795, -4.31454)
+
+[node name="spawnpoint4" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.41241, 0.795, 4.39458)
